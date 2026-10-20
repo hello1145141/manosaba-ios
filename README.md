@@ -161,3 +161,4 @@ endorsed by Nintendo or any game publisher. Nintendo Switch is a trademark of Ni
 ## License
 
 MIT, see [LICENSE](LICENSE). Third-party code keeps its own license in its own directory.
+test build
