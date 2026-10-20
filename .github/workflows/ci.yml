@@ -18,6 +18,8 @@ jobs:
     steps:
       - name: Checkout source
         uses: actions/checkout@v4
+        with:
+          submodules: recursive
 
       # 只装iOS工程依赖，host相关全部删掉！
       - name: Install libvpx
