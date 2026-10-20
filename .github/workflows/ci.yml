@@ -46,6 +46,5 @@ jobs:
       - name: Upload IPA artifact
         uses: actions/upload-artifact@v4
         with:
-          name: manosaba-unsigned-ipa
-          path: build/*.ipa
-          retention-days: 90
+          name: manosaba-ios-build
+          path: unsigned.ipa
