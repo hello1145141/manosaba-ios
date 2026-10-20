@@ -43,20 +43,6 @@ jobs:
           rm -rf Payload
         shell: bash
 
-      - name: Export unsigned IPA
-        run: |
-          set -e
-          cd ios
-          if [ ! -f "export.plist" ]; then
-            echo "ERROR: export.plist missing inside ios folder!"
-            exit 1
-          fi
-          xcodebuild \
-            -exportArchive \
-            -archivePath ./manosaba.xcarchive \
-            -exportOptionsPlist ./export.plist \
-            -exportPath ../build
-
       - name: Upload IPA artifact
         uses: actions/upload-artifact@v4
         with:
