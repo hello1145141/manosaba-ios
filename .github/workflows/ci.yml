@@ -29,17 +29,19 @@ jobs:
       - name: Build iOS archive
         run: |
           set -e
-          cd ios
-          if [ ! -f "manosaba.xcworkspace" ]; then
-            echo "ERROR: manosaba.xcworkspace not found in ios folder!"
-            exit 1
-          fi
-          xcodebuild \
-            -workspace manosaba.xcworkspace \
-            -scheme manosaba \
-            -configuration Release \
-            -archivePath ./manosaba.xcarchive \
-            archive
+          cd "${GITHUB_WORKSPACE}"
+          cmake -B build-ios \
+            -G Ninja \
+            -DCMAKE_SYSTEM_NAME=iOS \
+            -DCMAKE_OSX_DEPLOYMENT_TARGET=15.0 \
+            -DCMAKE_OSX_ARCHITECTURES=arm64 \
+            -DDM_NVN_M3=1
+          ninja -C build-ios
+          mkdir -p Payload
+          cp -R build-ios/manosaba.app Payload/
+          zip -r unsigned.ipa Payload
+          rm -rf Payload
+        shell: bash
 
       - name: Export unsigned IPA
         run: |
