@@ -11,21 +11,17 @@ concurrency:
   cancel-in-progress: true
 jobs:
   mac:
-    runs-on: macos-15
-    timeout-minutes: 25
-    env:
-      HOMEBREW_NO_AUTO_UPDATE: 1
+    runs-on: macos-latest
     steps:
       - name: Checkout source
         uses: actions/checkout@v4
         with:
           submodules: recursive
-
-      # 只装iOS工程依赖，host相关全部删掉！
-      - name: Install libvpx
-        run: brew install libvpx
-
-      # ================= iOS build section（只保留这个） =================
+  
+      - name: Install dependencies
+        run: brew install libvpx ninja cmake
+        shell: bash
+  
       - name: Build iOS archive
         run: |
           set -e
@@ -42,7 +38,7 @@ jobs:
           zip -r unsigned.ipa Payload
           rm -rf Payload
         shell: bash
-
+  
       - name: Upload IPA artifact
         uses: actions/upload-artifact@v4
         with:
